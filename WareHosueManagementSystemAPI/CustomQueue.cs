@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace WareHosueManagementSystemAPI
 {
-    class CustomQueue<T>
+    public delegate void QueueEventHandler<T, U>(T sender, U eventArgs);
+    public class CustomQueue<T> where T : IEntityPrimaryProperties
     {
         Queue<T> _queue = null;
+
+        public event QueueEventHandler<CustomQueue<T>, QueueEventArgs> CustomQueueEvent;
 
         public CustomQueue()
         {
@@ -25,7 +28,9 @@ namespace WareHosueManagementSystemAPI
 
         public void AddItem(T item)
         {
+            _queue.Enqueue(item);
 
+            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: {DateTime.Now.ToString("dd MMM yyyy hh:mm:ss tt")}{item.}" };
         }
 
         public T GetItem()
@@ -35,7 +40,7 @@ namespace WareHosueManagementSystemAPI
 
         public virtual void OnQueueChanged(QueueEventArgs e)
         {
-             
+            CustomQueueEvent(this, e);
         }
             
         public IEnumerator<T> GetEnumerator()
@@ -46,7 +51,7 @@ namespace WareHosueManagementSystemAPI
 
     public class QueueEventArgs : EventArgs
     {
-        public string message { get; set; }
+        public string Message { get; set; }
     } 
 }
  
