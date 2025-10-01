@@ -30,12 +30,18 @@ namespace WareHosueManagementSystemAPI
         {
             _queue.Enqueue(item);
 
-            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: {DateTime.Now.ToString(Constants.DateTimeFormat)}, ID {item.Id}, Name {item.Name}, Type {item.Type}" };
+            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: ({DateTime.Now.ToString(Constants.DateTimeFormat)}), ID ({item.Id}), Name ({item.Name}), Type ({item.Type}), Quantity ({item.Quantity}), has been added to the queue"};
+            OnQueueChanged(queueEventArgs);
         }
 
         public T GetItem()
         {
+            T item = _queue.Dequeue();
 
+            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: ({DateTime.Now.ToString(Constants.DateTimeFormat)}), ID ({item.Id}), Name ({item.Name}), Type ({item.Type}), Quantity ({item.Quantity}), has been added to the queue" };
+            OnQueueChanged(queueEventArgs);
+
+            return item;
         }
 
         public virtual void OnQueueChanged(QueueEventArgs e)

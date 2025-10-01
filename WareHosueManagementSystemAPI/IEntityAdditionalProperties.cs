@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace WareHosueManagementSystemAPI
 {
-    interface IEntityAdditionalProperties
+    public interface IEntityAdditionalProperties
     {
+        int Quantity { get; set; }
+        decimal UnitValue { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace WareHosueManagementSystemAPI
 {
     public class Constants
     {
-        public const string DateFormat = "dd MMM yyyyy hh:mm:ss tt";
+        public const string DateTimeFormat = "dd MMM yyyyy hh:mm:ss tt";
     }
 }
