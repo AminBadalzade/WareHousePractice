@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WareHosueManagementSystemAPI
 {
     public delegate void QueueEventHandler<T, U>(T sender, U eventArgs);
-    public class CustomQueue<T> where T : IEntityPrimaryProperties
+    public class CustomQueue<T> where T : IEntityPrimaryProperties, IEntityAdditionalProperties
     {
         Queue<T> _queue = null;
 
@@ -30,7 +30,7 @@ namespace WareHosueManagementSystemAPI
         {
             _queue.Enqueue(item);
 
-            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: {DateTime.Now.ToString("dd MMM yyyy hh:mm:ss tt")}{item.}" };
+            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: {DateTime.Now.ToString(Constants.DateTimeFormat)}, ID {item.Id}, Name {item.Name}, Type {item.Type}" };
         }
 
         public T GetItem()
