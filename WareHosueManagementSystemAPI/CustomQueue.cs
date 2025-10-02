@@ -30,7 +30,7 @@ namespace WareHosueManagementSystemAPI
         {
             _queue.Enqueue(item);
 
-            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: ({DateTime.Now.ToString(Constants.DateTimeFormat)}), ID ({item.Id}), Name ({item.Name}), Type ({item.Type}), Quantity ({item.Quantity}), has been added to the queue"};
+            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: ({DateTime.Now.ToString(Constants.DateTimeFormat)}), ID ({item.Id}), Name ({item.Name}), Type ({item.Type}), Quantity ({item.Quantity}), has been added to the queue. "};
             OnQueueChanged(queueEventArgs);
         }
 
@@ -38,7 +38,7 @@ namespace WareHosueManagementSystemAPI
         {
             T item = _queue.Dequeue();
 
-            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: ({DateTime.Now.ToString(Constants.DateTimeFormat)}), ID ({item.Id}), Name ({item.Name}), Type ({item.Type}), Quantity ({item.Quantity}), has been added to the queue" };
+            QueueEventArgs queueEventArgs = new QueueEventArgs { Message = $"DateTime: ({DateTime.Now.ToString(Constants.DateTimeFormat)}), ID ({item.Id}), Name ({item.Name}), Type ({item.Type}), Quantity ({item.Quantity}), has been processed. " };
             OnQueueChanged(queueEventArgs);
 
             return item;
@@ -46,7 +46,7 @@ namespace WareHosueManagementSystemAPI
 
         public virtual void OnQueueChanged(QueueEventArgs e)
         {
-            CustomQueueEvent(this, e);
+            CustomQueueEvent?.Invoke(this, e);
         }
             
         public IEnumerator<T> GetEnumerator()
